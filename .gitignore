@@ -28,6 +28,9 @@ yarn-error.log*
 # OS-related files
 .DS_Store
 
+# VSCode config
+.vscode
+
 # ==========================
 # BACKEND IGNORE RULES
 # ==========================
