@@ -16,5 +16,6 @@ public class OutputDonationNotification {
     private float amount;
     private String backerName;
     private Date paymentDate;
+    private String txHash;
 
 }

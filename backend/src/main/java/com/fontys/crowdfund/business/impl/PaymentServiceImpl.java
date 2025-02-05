@@ -101,6 +101,7 @@ public class PaymentServiceImpl implements PaymentService {
                     .backerName(paymentEntity.getUser().getName())
                     .paymentDate(paymentEntity.getPaymentDate())
                     .amount(paymentEntity.getAmount())
+                    .txHash(paymentEntity.getTxHash())
                     .build();
 
             outputDTOPaymentNotification.add(outputDonationNotification);
