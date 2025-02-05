@@ -17,5 +17,6 @@ public class InputDTOPayment {
     private int backerId;
     private float amountFunded;
     private Date paymentDate;
+    private String txHash;
 
 }

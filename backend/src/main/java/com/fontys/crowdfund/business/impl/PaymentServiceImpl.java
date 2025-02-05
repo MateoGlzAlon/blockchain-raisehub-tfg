@@ -59,6 +59,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .project(projectRepository.findById(paymentDTO.getProjectId()).orElse(null))
                 .amount(paymentDTO.getAmountFunded())
                 .paymentDate(paymentDTO.getPaymentDate())
+                .txHash(paymentDTO.getTxHash())
                 .build();
 
 

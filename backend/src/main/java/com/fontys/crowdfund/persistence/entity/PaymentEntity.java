@@ -40,4 +40,10 @@ public class PaymentEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "payment_date")
     private Date paymentDate;
+
+    @NotNull
+    @Column(name = "tx_hash")
+    private String txHash;
+
+
 }

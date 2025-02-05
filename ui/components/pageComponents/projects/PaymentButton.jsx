@@ -46,13 +46,15 @@ export default function PaymentButton({ projectId }) {
     };
 
     return (
-        <div className="flex flex-col items-center space-y-4">
-            <div className="flex items-center space-x-2 w-full pb-3">
-                <button className="w-full px-4 py-2 text-white bg-orange-500 rounded-lg hover:bg-orange-600" onClick={handlePayment} disabled={isProcessing}>
-                    {isProcessing ? "Processing..." : "Pay"}
-                </button>
-
-            </div>
+        <div className="flex flex-col items-center space-y-4 w-full">
+            <button
+                className="w-full px-4 py-3 text-white bg-orange-500 rounded-lg hover:bg-orange-600 text-center font-bold mb-4"
+                onClick={handlePayment}
+                disabled={isProcessing}
+            >
+                {isProcessing ? "Processing..." : "Pay"}
+            </button>
         </div>
+
     );
 }
