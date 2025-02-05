@@ -7,6 +7,8 @@ import { DATA } from "@/app/data";
 import { Button } from "@/components/ui/button";
 import TokenManager from "@/app/apis/TokenManager";
 import ProfileButton from "@/components/generalComponents/pageFrame/ProfileButton";
+import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
+
 
 import SearchBar from "./SearchBar";
 import { useWebSocket } from "@/components/generalComponents/WebSocketContext";
@@ -54,6 +56,11 @@ export default function Navbar() {
                     {claims ? (
 
                         <>
+
+                            <DynamicWidget
+                                variant="dropdown"
+                                innerButtonComponent={<span>Connect Wallet</span>}
+                            />
 
                             <Button
                                 onClick={() => router.push("/createProject")}

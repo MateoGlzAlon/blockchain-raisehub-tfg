@@ -5,6 +5,10 @@ const nextConfig = {
     images: {
         unoptimized: true, // Disable image optimization
     },
+    webpack: (config) => {
+        config.resolve.fallback = { encoding: false };
+        return config;
+    },
 };
 
 export default nextConfig;
