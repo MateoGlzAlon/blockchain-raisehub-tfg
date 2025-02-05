@@ -4,6 +4,8 @@ import createPaymentPOST from "@/components/fetchComponents/POST/createPaymentPO
 import TokenManager from "@/app/apis/TokenManager";
 import { useRouter } from "next/navigation";
 import { useWebSocket } from "@/components/generalComponents/WebSocketContext"
+import { useSendBalance } from "@dynamic-labs/sdk-react-core";
+
 
 
 
@@ -14,6 +16,7 @@ export default function PaymentButton({ projectId }) {
     const [isProcessing, setIsProcessing] = useState(false);
     const router = useRouter();
     const { sendMessage } = useWebSocket();
+    const { open } = useSendBalance();
 
 
     const handlePayment = () => {
@@ -46,13 +49,8 @@ export default function PaymentButton({ projectId }) {
             return;
         }
 
-        setModalContent({
-            message: `Are you sure you want to pay ${moneyAmount} € to this project?`,
-            buttons: [
-                { text: "Confirm", action: confirmPayment },
-                { text: "Cancel", action: () => setModalVisible(false) },
-            ],
-        });
+
+        confirmPayment()
         setModalVisible(true);
     };
 
@@ -87,7 +85,9 @@ export default function PaymentButton({ projectId }) {
         };
 
         try {
-            const response = await createPaymentPOST(paymentData);
+            const response = await createPaymentPOST(paymentData, open);
+
+            console.log("PaymentButton response ", response);
 
             if (response.status === 200) {
                 setModalContent({
