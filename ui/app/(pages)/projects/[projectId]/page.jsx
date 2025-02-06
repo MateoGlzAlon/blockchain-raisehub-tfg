@@ -17,7 +17,6 @@ import isProjectBookmarked from '@/components/fetchComponents/GET/isBookmarkedGE
 import removeBookmark from '@/components/fetchComponents/DELETE/removeBookmarkDELETE';
 import addBookmark from '@/components/fetchComponents/POST/addBookmarkPOST';
 
-// Reusable confirmation modal
 const ConfirmationModal = ({ isOpen, onClose, onConfirm, message }) => {
     if (!isOpen) return null;
 
@@ -117,7 +116,6 @@ const ProjectDetails = ({ params }) => {
 
             } catch (error) {
                 console.error("Error loading project data:", error);
-                router.push("/404");
             } finally {
                 setLoading(false);
             }
@@ -182,10 +180,10 @@ const ProjectDetails = ({ params }) => {
                             </div>
                             <div className="w-2/3 text-center flex flex-col items-center justify-center">
                                 <p className="text-2xl font-bold">
-                                    <NumberTicker value={project.moneyRaised} /> € raised
+                                    <NumberTicker value={project.moneyRaised} /> ETH raised
                                 </p>
                                 <p className="text-2xl font-thin">
-                                    {project.fundingGoal} € goal
+                                    {project.fundingGoal} ETH goal
                                 </p>
                             </div>
                         </div>

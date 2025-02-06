@@ -13,6 +13,14 @@ const Notification = ({ backerName, amount, paymentDate, txHash }) => {
         }
     };
 
+    const formattedAmount = Number(amount) < 0.000001
+        ? "<0.000001"
+        : Number(amount).toLocaleString("en-US", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 6,
+            useGrouping: false,
+        });
+
     return (
         <figure
             className={cn(
@@ -28,7 +36,7 @@ const Notification = ({ backerName, amount, paymentDate, txHash }) => {
                 </div>
                 <div className="flex flex-col overflow-hidden">
                     <figcaption className="text-base font-medium dark:text-white">
-                        <span>{amount}€</span>
+                        <span>{formattedAmount} ETH</span>
                         <span className="mx-1">·</span>
                         <span>{backerName}</span>
                     </figcaption>

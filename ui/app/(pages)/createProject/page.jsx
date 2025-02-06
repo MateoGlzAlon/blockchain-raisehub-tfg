@@ -69,6 +69,19 @@ function CreateProjectPage() {
         }
     };
 
+
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length + images.length > 3) {
+            alert('You can upload up to 3 images only.');
+            return;
+        }
+        const newImages = [...images, ...files];
+        const previews = newImages.map((file) => URL.createObjectURL(file));
+        setImages(newImages);
+        setImagePreviews(previews);
+    };
+
     if (!isClient) {
         return (
             <PageFrame>
@@ -195,6 +208,29 @@ function CreateProjectPage() {
                             >
                                 {usePrimary ? "Enter manually" : "Use primary wallet"}
                             </button>
+                        </div>
+
+                        <div>
+                            <label className="block text-gray-700 font-medium">Project Images (Up to 3)</label>
+                            <input
+                                type="file"
+                                name="images"
+                                onChange={handleImageChange}
+                                className="w-full px-4 py-3 border rounded-lg mt-2 focus:outline-none"
+                                accept="image/*"
+                                multiple
+                                required
+                            />
+                            <div className="flex mt-4 gap-4">
+                                {imagePreviews.map((preview, index) => (
+                                    <img
+                                        key={index}
+                                        src={preview}
+                                        alt={`preview-${index}`}
+                                        className="w-24 h-24 object-cover rounded-lg border"
+                                    />
+                                ))}
+                            </div>
                         </div>
 
                         <div className="text-center mt-6">
