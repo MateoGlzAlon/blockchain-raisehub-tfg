@@ -6,7 +6,7 @@ import TokenManager from "@/app/apis/TokenManager";
 import { useRouter } from "next/navigation";
 import { useSendBalance } from "@dynamic-labs/sdk-react-core";
 
-export default function PaymentButton({ projectId }) {
+export default function PaymentButton({ projectId, creatorWallet }) {
     const [moneyAmount, setMoneyAmount] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
     const router = useRouter();
@@ -23,15 +23,20 @@ export default function PaymentButton({ projectId }) {
 
         setIsProcessing(true);
 
-        try {
-            const response = await createPaymentPOST({
-                projectId,
-                backerId: claims.userId,
-                //amountFunded: moneyAmount,
-                paymentDate: new Date(),
-            }, open);
+        console.log("CreatorWallet paymentButton : ", creatorWallet);
 
-            if (response.status === 200) {
+        try {
+            const response = await createPaymentPOST(
+                {
+                    projectId,
+                    backerId: claims.userId,
+                    paymentDate: new Date(),
+                },
+                open,
+                creatorWallet
+            );
+
+            if (response?.status === 200) {
                 alert("Payment successful!");
                 setMoneyAmount("");
             } else {
@@ -55,6 +60,5 @@ export default function PaymentButton({ projectId }) {
                 {isProcessing ? "Processing..." : "Pay"}
             </button>
         </div>
-
     );
 }

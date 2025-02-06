@@ -158,6 +158,8 @@ const ProjectDetails = ({ params }) => {
 
     if (!project) return null;
 
+    console.log("project es : ", project);
+
     return (
         <PageFrame>
             <div className="px-6">
@@ -187,7 +189,7 @@ const ProjectDetails = ({ params }) => {
                                 </p>
                             </div>
                         </div>
-                        <PaymentButton projectId={projectId} />
+                        <PaymentButton projectId={projectId} creatorWallet={project.creatorWallet} />
                         <DonorsList projectId={projectId} />
                     </div>
                 </div>

@@ -71,6 +71,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .moneyRaised(0f) //CHECK : Confirm that moneyRaised should always start at 0f.
                 .fundingGoal(postDTOProject.getFundingGoal())
                 .user(userRepository.findById(postDTOProject.getUserId())) //CHECK : Validate that the user exists in the database before assigning it to the project.
+                .creatorWallet(postDTOProject.getCreatorWallet())
                 .build();
 
         //CHECK : Ensure the projectRepository.save() operation succeeds without exceptions.
@@ -255,6 +256,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .location(projectEntity.getLocation())
                 .type(projectEntity.getType())
                 .dateCreated(projectEntity.getDateCreated())
+                .creatorWallet(projectEntity.getCreatorWallet())
                 .build();
     }
 

@@ -3,13 +3,14 @@ import { DATA } from "@/app/data";
 import TokenManager from "@/app/apis/TokenManager";
 import { parseEther, formatEther, ethers } from "ethers";
 
-export default async function createPaymentPOST(paymentData, open) {
+export default async function createPaymentPOST(paymentData, open, creatorWallet) {
     console.log("Processing payment", paymentData);
+    console.log("CreatorWallet : ", creatorWallet)
 
     try {
         // ✅ 1. Send Transaction Using Dynamic SDK
         const txHash = await open({
-            recipientAddress: "0xe4f1638f1E34dF36D0B3523b4402A89F1478f0B1",
+            recipientAddress: creatorWallet,
             value: parseEther("0.000000001"), // Amount in Wei
         });
 

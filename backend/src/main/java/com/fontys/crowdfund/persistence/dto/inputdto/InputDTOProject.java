@@ -21,6 +21,7 @@ public class InputDTOProject {
     private Date dateCreated;
     private float fundingGoal;
     private int userId;
+    private String creatorWallet;
     private List<String> images;
 
 }

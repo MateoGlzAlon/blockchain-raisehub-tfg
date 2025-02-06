@@ -59,4 +59,8 @@ public class ProjectEntity {
     @Column(name = "percentage_funded", insertable = false, updatable = false)
     private Double percentageFunded;
 
+    @NotNull
+    @Column(name = "creator_wallet")
+    private String creatorWallet;
+
 }

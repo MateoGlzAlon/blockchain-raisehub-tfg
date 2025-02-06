@@ -22,6 +22,7 @@ public class ProjectDetailsDTO {
     private float fundingGoal;
     private float moneyRaised;
     private List<String> images;
+    private String creatorWallet;
 
     private String description;
     private String location;
