@@ -10,7 +10,7 @@ export default function xNumberTicker({
   direction = "up",
   delay = 0,
   className,
-  decimalPlaces = 2, // Assuming percentages need two decimal places
+  decimalPlaces = 4, // Assuming percentages need two decimal places
 }) {
   const ref = useRef(null);
   const motionValue = useMotionValue(direction === "down" ? value : 0);

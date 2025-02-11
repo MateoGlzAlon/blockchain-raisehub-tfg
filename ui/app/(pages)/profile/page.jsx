@@ -208,8 +208,8 @@ export default function Profile() {
                                             <h3 className="text-lg font-semibold text-gray-800">{project.name}</h3>
                                         </div>
                                         <div className="text-right">
-                                            <p className="text-xl font-bold text-gray-800">{project.moneyRaised}€</p>
-                                            <p className="text-gray-600">of {project.fundingGoal}€</p>
+                                            <p className="text-xl font-bold text-gray-800">{project.moneyRaised} ETH</p>
+                                            <p className="text-gray-600">of {project.fundingGoal} ETH</p>
                                         </div>
                                     </div>
                                 ))
@@ -223,7 +223,7 @@ export default function Profile() {
                     <div className="bg-white p-4 rounded-lg shadow-md flex flex-col h-full">
                         <div>
                             <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-xl font-bold text-gray-800">Payments Made ({totalPayments}€)</h2>
+                                <h2 className="text-xl font-bold text-gray-800">Payments Made ({totalPayments} ETH)</h2>
                                 <select
                                     className="border px-4 py-2 rounded bg-gray-50"
                                     value={timeFilter}
@@ -259,7 +259,7 @@ export default function Profile() {
                                                 </p>
                                             </div>
                                             <div className="text-right">
-                                                <p className="text-xl font-bold text-gray-800">{payment.amountFunded}€</p>
+                                                <p className="text-xl font-bold text-gray-800">{payment.amountFunded} ETH</p>
                                                 <p className="text-gray-600">contributed</p>
                                             </div>
                                         </div>

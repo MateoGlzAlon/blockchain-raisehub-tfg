@@ -16,8 +16,9 @@ import TokenManager from '@/app/apis/TokenManager';
 import isProjectBookmarked from '@/components/fetchComponents/GET/isBookmarkedGET';
 import removeBookmark from '@/components/fetchComponents/DELETE/removeBookmarkDELETE';
 import addBookmark from '@/components/fetchComponents/POST/addBookmarkPOST';
+import { Copy, CheckCircle } from "lucide-react";
 
-// Reusable confirmation modal
+
 const ConfirmationModal = ({ isOpen, onClose, onConfirm, message }) => {
     if (!isOpen) return null;
 
@@ -54,6 +55,15 @@ const ProjectDetails = ({ params }) => {
     const [isBanModalOpen, setBanModalOpen] = useState(false);
     const [claims, setClaims] = useState(null);
     const { setupStompClient } = useWebSocket();
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        if (project.creatorWallet) {
+            navigator.clipboard.writeText(project.creatorWallet);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+        }
+    };
 
     const handleDeleteProject = async () => {
         try {
@@ -117,7 +127,6 @@ const ProjectDetails = ({ params }) => {
 
             } catch (error) {
                 console.error("Error loading project data:", error);
-                router.push("/404");
             } finally {
                 setLoading(false);
             }
@@ -182,10 +191,10 @@ const ProjectDetails = ({ params }) => {
                             </div>
                             <div className="w-2/3 text-center flex flex-col items-center justify-center">
                                 <p className="text-2xl font-bold">
-                                    <NumberTicker value={project.moneyRaised} /> € raised
+                                    <NumberTicker value={project.moneyRaised} /> ETH raised
                                 </p>
                                 <p className="text-2xl font-thin">
-                                    {project.fundingGoal} € goal
+                                    {project.fundingGoal} ETH goal
                                 </p>
                             </div>
                         </div>
@@ -208,6 +217,7 @@ const ProjectDetails = ({ params }) => {
                                 <p className="text-xl">
                                     Project was created by {project.ownerName}
                                 </p>
+
                             </div>
                         </div>
 
@@ -235,19 +245,51 @@ const ProjectDetails = ({ params }) => {
                         </p>
                     </div>
 
-                    <div className="w-1/3 my-6 justify-center">
-
-                        {claims ? (
+                    <div className="w-full md:w-1/3 my-6 flex flex-col items-center text-center overflow-hidden">
+                        {claims && (
                             <button
-                                onClick={toggleBookmark} // Toggle bookmark state when clicked
-                                className={`px-6 py-2 rounded-md text-white font-semibold transition-all duration-300 ease-in-out ${bookmarked ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-500 hover:bg-gray-600'} w-full`}
+                                onClick={toggleBookmark}
+                                className={`px-6 py-2 rounded-md text-white font-semibold transition-all duration-300 ease-in-out w-full 
+                        ${bookmarked ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-500 hover:bg-gray-600'}`}
                             >
                                 {bookmarked ? '⭐ Bookmarked' : '❌ Not Bookmarked'}
                             </button>
-                        ) : (
-                            <></>
                         )}
+                        <div className="mt-4 text-lg font-medium text-center">
+                            <span className="font-semibold text-gray-700">Wallet of the Creator:</span>
+                            <br />
+                            {project.creatorWallet ? (<>
+                                <div>
+                                    {project.creatorWallet}
+                                </div>
 
+
+                                <div className="flex items-center justify-center gap-3 mt-2">
+                                    {/* Etherscan Link */}
+                                    <a
+                                        href={`https://etherscan.io/address/${project.creatorWallet}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-4 py-2 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out flex items-center gap-2"
+                                    >
+                                        🔗 View on Etherscan
+                                    </a>
+
+                                    {/* Copy Button */}
+                                    <button
+                                        onClick={handleCopy}
+                                        className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg shadow-md hover:bg-gray-300 transition duration-300 ease-in-out flex items-center gap-2"
+                                    >
+                                        {copied ? <CheckCircle className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
+                                        {copied ? "Copied!" : "Copy Address"}
+                                    </button>
+                                </div>
+                            </>
+                            ) : (
+                                <span className="text-gray-500">This project does not have a wallet associated</span>
+                            )
+                            }
+                        </div>
 
                     </div>
                 </div>

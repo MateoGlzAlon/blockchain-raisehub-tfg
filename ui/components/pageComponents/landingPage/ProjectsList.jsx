@@ -72,7 +72,7 @@ const ProjectsList = ({ title, endpoint }) => {
                                 </div>
                                 <h3 className="text-base font-bold mt-4">{project.name}</h3>
                                 <p className="text-sm text-gray-700 mt-2">
-                                    ${project.moneyRaised} raised of ${project.fundingGoal}
+                                    {project.moneyRaised} ETH raised of {project.fundingGoal} ETH
                                 </p>
                             </div>
                         ))

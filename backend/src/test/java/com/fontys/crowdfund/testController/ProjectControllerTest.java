@@ -116,7 +116,7 @@ class ProjectControllerTest {
         // Arrange
         InputDTOProject inputDTOProject = new InputDTOProject(
                 "Test Project", "Test Description", "Test Location",
-                "Test Type", new Date(), 1000.0F, 1, images);
+                "Test Type", new Date(), 1000.0F, 1,"0xwallet", images);
         when(projectService.createProject(inputDTOProject)).thenReturn(testProject);
 
         // Act

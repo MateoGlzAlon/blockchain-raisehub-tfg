@@ -123,7 +123,7 @@ export default function SearchProjectList() {
                                 </p>
 
                                 <div className="text-sm font-medium text-gray-800">
-                                    {project.moneyRaised} € raised of {project.fundingGoal} €
+                                    {project.moneyRaised} ETH raised of {project.fundingGoal} ETH
                                 </div>
                                 <div className="w-full overflow-hidden bg-gray-300 rounded-full h-2.5 mb-[1rem]">
                                     <div

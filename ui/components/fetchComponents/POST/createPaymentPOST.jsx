@@ -8,7 +8,6 @@ export default async function createPaymentPOST(paymentData, open, creatorWallet
     console.log("CreatorWallet : ", creatorWallet)
 
     try {
-        // ✅ 1. Send Transaction Using Dynamic SDK
         const txHash = await open({
             recipientAddress: creatorWallet,
             value: parseEther("0.000000001"), // Amount in Wei
@@ -20,7 +19,6 @@ export default async function createPaymentPOST(paymentData, open, creatorWallet
 
         console.log("📤 Transaction Sent:", txHash);
 
-        // ✅ 2. Wait for Transaction Confirmation using ethers.js
         const provider = new ethers.BrowserProvider(window.ethereum); // Use connected wallet provider
         let receipt = null;
 
