@@ -1,8 +1,8 @@
-name: CI Pipeline
+name: Frontend CI Pipeline
 
 on:
   workflow_run:
-    workflows: ["backend CI"]
+    workflows: ["Backend CI Pipeline"]
     types:
       - completed
 
