@@ -76,6 +76,8 @@ jobs:
 
       - name: Run Cypress tests manually
         run: |
+          pwd
+          ls
           cd ui
           npx cypress run --browser chrome --config-file cypress.config.js
         env:
