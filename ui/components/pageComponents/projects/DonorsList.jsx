@@ -31,8 +31,8 @@ const Notification = ({ backerName, amount, paymentDate, txHash }) => {
             onClick={handleRedirect}
         >
             <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center size-10 rounded-2xl">
-                    <img src="https://placehold.co/600x400?text=Icon" alt="icon" className="object-cover" />
+                <div className="flex items-center justify-center size-10 rounded-2xl p-2">
+                    <img src="/eth-logo.svg" alt="icon" className="object-cover" />
                 </div>
                 <div className="flex flex-col overflow-hidden">
                     <figcaption className="text-base font-medium dark:text-white">

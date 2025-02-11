@@ -1,9 +1,9 @@
 services:
   raisehub-database:
-    image: mateogonzalezz/raisehub_database
+    image: mateogonzalezz/blockchain_raisehub_database
     volumes:
       - mysql-data:/var/lib/mysql
-    container_name: raisehub_database
+    container_name: blockchain_raisehub_database
     ports:
       - 3307:3306
     healthcheck:
@@ -13,8 +13,8 @@ services:
       retries: 5
 
   raisehub-backend:
-    image: mateogonzalezz/raisehub_backend
-    container_name: raisehub_backend
+    image: mateogonzalezz/blockchain_raisehub_backend
+    container_name: blockchain_raisehub_backend
     environment:
       - JWT_SECRET=E91E158E4C6656F68B165H1C316766DE98D2AD6EF3BFB44F78E9CFCDF5
       - MYSQL_USERNAME=root
@@ -26,8 +26,8 @@ services:
         condition: service_healthy
 
   nameless-frontend:
-    image: mateogonzalezz/raisehub_frontend
-    container_name: raisehub_frontend
+    image: mateogonzalezz/blockchain_raisehub_frontend
+    container_name: blockchain_raisehub_frontend
     environment:
       - AWS_BUCKET_NAME=<value>
       - AWS_BUCKET_REGION=<value>
@@ -42,4 +42,4 @@ volumes:
   mysql-data:
 
 
-name: raisehub-application
+name: blockchain-raisehub-application
