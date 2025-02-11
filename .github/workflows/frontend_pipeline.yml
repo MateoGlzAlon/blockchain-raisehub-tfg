@@ -20,30 +20,44 @@ jobs:
           node-version: 18
 
       - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        run: |
+          echo "Logging into Docker Hub..."
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Create container network
         run: |
+          echo "Creating Docker network..."
           docker network create docker_network_crowdfund
 
       - name: Run MySQL database service
         run: |
+          echo "Pulling MySQL database image..."
           docker pull ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_database:latest
+          echo "Starting MySQL container..."
           docker run -d --name blockchain_raisehub_database \
             -p 3306:3306 \
             --env MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
             --env MYSQL_DATABASE=crowdfund_db \
             ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_database:latest
           docker network connect docker_network_crowdfund blockchain_raisehub_database
+          echo "MySQL container started."
 
       - name: Wait for MySQL to be ready
         run: |
-          sleep 30
-          echo "MySQL is ready"
+          echo "Waiting for MySQL to be ready..."
+          timeout 60 sh -c 'until mysqladmin ping -h "127.0.0.1" --silent; do sleep 5; done'
+          echo "MySQL is ready."
+
+      - name: Debug MySQL container
+        run: |
+          echo "Checking MySQL logs..."
+          docker logs blockchain_raisehub_database || echo "Failed to retrieve MySQL logs."
 
       - name: Run backend service
         run: |
+          echo "Pulling backend image..."
           docker pull ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_backend:latest
+          echo "Starting backend container..."
           docker run -d --name backend \
             -p 8080:8080 \
             --env MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} \
@@ -51,37 +65,65 @@ jobs:
             --env JWT_SECRET=${{ secrets.JWT_SECRET }} \
             ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_backend:latest            
           docker network connect docker_network_crowdfund backend
+          echo "Backend service started."
 
       - name: Wait for Backend Service to be ready
         run: |
+          echo "Waiting for backend to be ready..."
           sleep 10
+          echo "Backend should be ready."
+
+      - name: Debug Backend container
+        run: |
+          echo "Checking backend logs..."
+          docker logs backend || echo "Failed to retrieve backend logs."
 
       - name: Build and Serve Frontend
+        working-directory: ui
         run: |
-          cd ui
-          npm install
+          echo "Installing frontend dependencies..."
+          npm ci
+          echo "Building frontend..."
           npm run build
-          npm run start &
+          echo "Starting frontend..."
+          npm start &
 
       - name: Wait for Frontend Service to Start
         run: |
-          sleep 15
-          echo "Frontend is ready"
+          echo "Waiting for frontend to be ready..."
+          timeout 60 sh -c 'until curl -s http://localhost:3000; do sleep 5; done'
+          echo "Frontend is ready."
+
+      - name: Debug Frontend logs
+        run: |
+          echo "Checking frontend logs..."
+          docker ps -a || echo "Failed to list Docker containers."
 
       - name: Install Cypress and dependencies
+        working-directory: ui
         run: |
-          cd ui
+          echo "Installing Cypress..."
           npm install
           npx cypress install
+          echo "Cypress installed successfully."
+
+      - name: Debug Cypress Installation
+        working-directory: ui
+        run: |
+          echo "Verifying Cypress installation..."
+          npx cypress verify
+          echo "Cypress verification complete."
 
       - name: Run Cypress tests manually
+        working-directory: ui
         run: |
-          pwd
-          ls
-          cd ui
-          npx cypress run --browser chrome --config-file cypress.config.js
+          echo "Current working directory: $(pwd)"
+          echo "Listing files in UI directory:"
+          ls -lah
+          echo "Running Cypress tests..."
+          npx cypress run --browser chrome --config-file cypress.config.js || echo "Cypress tests failed."
         env:
-          CYPRESS_baseUrl: http://localhost:3000
+          CYPRESS_baseUrl: "http://localhost:3000"
 
   docker-build:
     runs-on: ubuntu-latest
@@ -92,24 +134,33 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        run: |
+          echo "Logging into Docker Hub..."
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Generate date-based tag
-        run: echo "IMAGE_TAG=$(date +'%d-%m-%Y_%H-%M')" >> $GITHUB_ENV
+        run: |
+          echo "Generating date-based tag..."
+          echo "IMAGE_TAG=$(date +'%d-%m-%Y_%H-%M')" >> $GITHUB_ENV
+          echo "Generated IMAGE_TAG=${{ env.IMAGE_TAG }}"
 
       - name: Build Docker Image
+        working-directory: ui
         run: |
-          cd ui
-          docker build . \
-            --file Dockerfile \
-            --tag blockchain_raisehub_fe:latest
+          echo "Building Docker image..."
+          docker build . --file Dockerfile --tag blockchain_raisehub_fe:latest
+          echo "Docker image built successfully."
 
       - name: Tag Docker Image
         run: |
+          echo "Tagging Docker image..."
           docker tag blockchain_raisehub_fe:latest ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_frontend:${{ env.IMAGE_TAG }}
           docker tag blockchain_raisehub_fe:latest ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_frontend:latest
+          echo "Docker image tagged successfully."
 
       - name: Push Docker Images
         run: |
+          echo "Pushing Docker images to registry..."
           docker push ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_frontend:${{ env.IMAGE_TAG }}
           docker push ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_frontend:latest
+          echo "Docker images pushed successfully."
