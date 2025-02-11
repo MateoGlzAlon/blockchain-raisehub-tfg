@@ -23,6 +23,7 @@ const Notification = ({ backerName, amount, paymentDate, txHash }) => {
 
     return (
         <figure
+            id="donation-notification"
             className={cn(
                 "relative mx-auto min-h-fit w-full cursor-pointer overflow-hidden rounded-2xl p-2 border-[1px]",
                 "transition-all duration-1000 ease-in-out hover:bg-gray-200",
@@ -30,7 +31,7 @@ const Notification = ({ backerName, amount, paymentDate, txHash }) => {
             )}
             onClick={handleRedirect}
         >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 ">
                 <div className="flex items-center justify-center size-10 rounded-2xl p-2">
                     <img src="/eth-logo.svg" alt="icon" className="object-cover" />
                 </div>
