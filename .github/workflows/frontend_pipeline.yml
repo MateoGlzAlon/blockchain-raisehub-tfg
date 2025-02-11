@@ -72,7 +72,7 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
-          config-file: frontend/cypress.config.js
+          config-file: ui/cypress.config.js
         env:
           CYPRESS_baseUrl: http://localhost:3000
         working-directory: ui
