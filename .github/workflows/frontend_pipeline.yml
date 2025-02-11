@@ -1,0 +1,108 @@
+name: CI Pipeline
+
+on:
+  workflow_run:
+    workflows: ["backend CI"]
+    types:
+      - completed
+
+jobs:
+  cypress-tests:
+    runs-on: ubuntu-latest    
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Create container network
+        run: |
+          docker network create docker_network_crowdfund
+
+      - name: Run MySQL database service
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_database:latest
+          docker run -d --name blockchain_raisehub_database \
+            -p 3306:3306 \
+            --env MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }} \
+            --env MYSQL_DATABASE=crowdfund_db \
+            ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_database:latest
+          docker network connect docker_network_crowdfund blockchain_raisehub_database
+
+      - name: Wait for MySQL to be ready
+        run: |
+          sleep 30
+          echo "MySQL is ready"
+
+      - name: Run backend service
+        run: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_backend:latest
+          docker run -d --name backend \
+            -p 8080:8080 \
+            --env MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} \
+            --env MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
+            --env JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_backend:latest            
+          docker network connect docker_network_crowdfund backend
+
+      - name: Wait for Backend Service to be ready
+        run: |
+          sleep 10
+
+      - name: Build and Serve Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+          npm run start &
+
+      - name: Wait for Frontend Service to Start
+        run: |
+          sleep 15
+          echo "Frontend is ready"
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v5
+        with:
+          browser: chrome
+          config-file: frontend/cypress.config.js
+        env:
+          CYPRESS_baseUrl: http://localhost:3000
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: cypress-tests
+    if: ${{ success() }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Generate date-based tag
+        run: echo "IMAGE_TAG=$(date +'%d-%m-%Y_%H-%M')" >> $GITHUB_ENV
+
+      - name: Build Docker Image
+        run: |
+          cd frontend
+          docker build . \
+            --file Dockerfile \
+            --tag blockchain_raisehub_fe:latest
+
+      - name: Tag Docker Image
+        run: |
+          docker tag blockchain_raisehub_fe:latest ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_frontend:${{ env.IMAGE_TAG }}
+          docker tag blockchain_raisehub_fe:latest ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_frontend:latest
+
+      - name: Push Docker Images
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_frontend:${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_frontend:latest
