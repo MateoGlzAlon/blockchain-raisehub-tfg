@@ -175,10 +175,10 @@ export default function ProjectFilterTable() {
 
                                 <div className="flex justify-between items-center mt-auto">
                                     <p className="text-lg font-bold text-blue-600">
-                                        {project.moneyRaised} € raised
+                                        {project.moneyRaised} ETH raised
                                     </p>
                                     <p className="text-sm text-gray-500">
-                                        of {project.fundingGoal} €
+                                        of {project.fundingGoal} ETH
                                     </p>
                                 </div>
                             </div>
