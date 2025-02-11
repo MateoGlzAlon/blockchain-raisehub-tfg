@@ -68,11 +68,16 @@ jobs:
           sleep 15
           echo "Frontend is ready"
 
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v5
-        with:
-          browser: chrome
-          config-file: ui/cypress.config.js
+      - name: Install Cypress and dependencies
+        run: |
+          cd ui
+          npm install
+          npx cypress install
+
+      - name: Run Cypress tests manually
+        run: |
+          cd ui
+          npx cypress run --browser chrome --config-file cypress.config.js
         env:
           CYPRESS_baseUrl: http://localhost:3000
 
