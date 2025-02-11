@@ -75,7 +75,6 @@ jobs:
           config-file: ui/cypress.config.js
         env:
           CYPRESS_baseUrl: http://localhost:3000
-        working-directory: ui
 
   docker-build:
     runs-on: ubuntu-latest
