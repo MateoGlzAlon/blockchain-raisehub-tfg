@@ -58,7 +58,7 @@ jobs:
 
       - name: Build and Serve Frontend
         run: |
-          cd frontend
+          ls
           npm install
           npm run build
           npm run start &
