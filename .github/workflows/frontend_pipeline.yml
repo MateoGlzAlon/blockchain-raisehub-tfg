@@ -85,17 +85,20 @@ jobs:
 
       - name: Upload Cypress screenshots on failure
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: ui/cypress/screenshots
+          compression-level: 9 # Optional for better compression
+
 
       - name: Upload Cypress videos on failure
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
           path: ui/cypress/videos
+          compression-level: 9 # Optional for better compression
 
 
   docker-build:
