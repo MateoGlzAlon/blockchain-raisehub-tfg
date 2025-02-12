@@ -74,7 +74,7 @@ jobs:
           npm install
           npx cypress install
 
-           - name: Run Cypress tests manually
+      - name: Run Cypress tests manually
         run: |
           echo "Current working directory: $(pwd)"
           echo "Listing files in UI directory:"
