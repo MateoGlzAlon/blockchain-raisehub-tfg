@@ -80,7 +80,7 @@ jobs:
           echo "Listing files in UI directory:"
           ls -lah ui
           echo "Running Cypress tests with debug logging..."
-          npx cypress run --browser chrome --config-file cypress.config.js --env CI=true --record --reporter junit --headed || echo "Cypress tests failed."
+          npx cypress run --browser chrome --config-file ui/cypress.config.js --env CI=true --record --reporter junit --headed
         env:
           CYPRESS_baseUrl: "http://localhost:3000"
 
