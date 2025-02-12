@@ -65,7 +65,7 @@ jobs:
 
       - name: Wait for Frontend Service to Start
         run: |
-          sleep 15
+          sleep 5
           echo "Frontend is ready"
 
       - name: Install Cypress and dependencies
@@ -82,6 +82,20 @@ jobs:
             config-file: cypress.config.js
         env:
             CYPRESS_baseUrl: http://localhost:3000
+
+      - name: Upload Cypress screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: ui/cypress/screenshots
+
+      - name: Upload Cypress videos on failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: ui/cypress/videos
 
 
   docker-build:
