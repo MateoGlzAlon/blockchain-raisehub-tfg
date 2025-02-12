@@ -24,14 +24,8 @@ describe('Logged in tests', () => {
         cy.url().should('include', '/projects/');
     });
 
-    it('Make a payment', () => {
-        cy.get('#project-card').click();
-        cy.get('#inputMoneyAmount').should('be.visible');
-        cy.get('#inputMoneyAmount')
-            .type('125')
-            .should('have.value', '125');
-        cy.contains('Pay').click();
-        cy.contains('Confirm').click();
+    it('Connect a wallet', () => {
+        cy.get('#dynamic-widget').click();
     });
 
     it('Search projects', () => {
@@ -39,5 +33,16 @@ describe('Logged in tests', () => {
         cy.get('#search-submit').click();
         cy.contains('Garden').should('be.visible');
     });
+
+    it('View payment on Etherscan', () => {
+        cy.get('#project-card').click();
+        cy.get(':nth-child(1) > #donation-notification').click();
+        cy.window().then((win) => {
+            cy.stub(win, 'open').as('windowOpen');
+        });
+        cy.get('#donation-notification').click();
+        cy.get('@windowOpen').should('be.calledWithMatch', /https:\/\/sepolia\.etherscan\.io\/tx\/.+/);
+    });
+
 
 });

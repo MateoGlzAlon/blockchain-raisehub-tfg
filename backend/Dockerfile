@@ -14,4 +14,4 @@ RUN gradle build --no-daemon -x test
 ENV PROFILE=docker
 
 # Set the entry point to run the application
-ENTRYPOINT ["sh", "-c", "java -Dspring.profiles.active=${PROFILE} -jar build/libs/Crowdfund-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["sh", "-c", "java -Dspring.profiles.active=${PROFILE} -jar build/libs/RaiseHub-0.0.1-SNAPSHOT.jar"]

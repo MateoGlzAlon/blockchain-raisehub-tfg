@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Backend CI Pipeline
 
 on:
   push:
@@ -117,14 +117,14 @@ jobs:
         run: |
           docker build backend \
             --file backend/Dockerfile \
-            --tag raisehub_be:latest
+            --tag blockchain_raisehub_be:latest
       - name: Tag Docker Image
         if: env.status == 'OK'
         run: |
-          docker tag raisehub_be:latest ${{ secrets.DOCKER_USERNAME }}/raisehub_backend:${{ env.IMAGE_TAG }}
-          docker tag raisehub_be:latest ${{ secrets.DOCKER_USERNAME }}/raisehub_backend:latest
+          docker tag blockchain_raisehub_be:latest ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_backend:${{ env.IMAGE_TAG }}
+          docker tag blockchain_raisehub_be:latest ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_backend:latest
       - name: Push Docker Images
         if: env.status == 'OK'
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/raisehub_backend:${{ env.IMAGE_TAG }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/raisehub_backend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_backend:${{ env.IMAGE_TAG }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/blockchain_raisehub_backend:latest
