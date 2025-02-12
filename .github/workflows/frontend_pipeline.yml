@@ -74,15 +74,14 @@ jobs:
           npm install
           npx cypress install
 
-      - name: Run Cypress tests manually
-        run: |
-          echo "Current working directory: $(pwd)"
-          echo "Listing files in UI directory:"
-          ls -lah ui
-          echo "Running Cypress tests with debug logging..."
-          npx cypress run --browser chrome --config-file ui/cypress.config.js --env CI=true --record --reporter junit --headed
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v5
+        with:
+            browser: chrome
+            working-directory: ui
+            config-file: ui/cypress.config.js
         env:
-          CYPRESS_baseUrl: "http://localhost:3000"
+            CYPRESS_baseUrl: http://localhost:3000
 
 
   docker-build:
