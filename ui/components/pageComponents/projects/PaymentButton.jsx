@@ -29,7 +29,6 @@ export default function PaymentButton({ projectId, creatorWallet }) {
 
         setIsProcessing(true);
 
-        console.log("CreatorWallet paymentButton : ", creatorWallet);
 
         try {
             const response = await createPaymentPOST(
@@ -41,8 +40,6 @@ export default function PaymentButton({ projectId, creatorWallet }) {
                 open,
                 creatorWallet
             );
-
-            console.log("response : ", response);
 
             if (response?.status === 200) {
                 showNotification("Payment successful!", "success");
@@ -74,7 +71,7 @@ export default function PaymentButton({ projectId, creatorWallet }) {
                 onClick={handlePayment}
                 disabled={isProcessing}
             >
-                {isProcessing ? "Processing..." : "Pay"}
+                {isProcessing ? "🔄 Processing..." : "Pay"}
             </button>
         </div>
     );

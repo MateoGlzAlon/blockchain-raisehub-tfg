@@ -52,9 +52,6 @@ function CreateProjectPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-
-        console.log("formData antes update:", formData);
-
         const updatedFormData = {
             ...formData,
             dateCreated: new Date().toISOString(),

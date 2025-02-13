@@ -4,8 +4,6 @@ import TokenManager from "@/app/apis/TokenManager";
 import { parseEther, formatEther, ethers } from "ethers";
 
 export default async function createPaymentPOST(paymentData, open, creatorWallet) {
-    console.log("Processing payment", paymentData);
-    console.log("CreatorWallet : ", creatorWallet)
 
     try {
         const txHash = await open({
@@ -17,7 +15,6 @@ export default async function createPaymentPOST(paymentData, open, creatorWallet
             throw new Error("⚠️ Transaction hash is undefined. Open() might have failed.");
         }
 
-        console.log("📤 Transaction Sent:", txHash);
 
         const provider = new ethers.BrowserProvider(window.ethereum); // Use connected wallet provider
         let receipt = null;
@@ -26,7 +23,6 @@ export default async function createPaymentPOST(paymentData, open, creatorWallet
             try {
                 receipt = await provider.getTransactionReceipt(txHash);
                 if (!receipt) {
-                    console.log("⏳ Waiting for transaction confirmation...");
                     await new Promise(res => setTimeout(res, 3000)); // Wait 3 seconds
                 }
             } catch (error) {
@@ -34,8 +30,6 @@ export default async function createPaymentPOST(paymentData, open, creatorWallet
                 await new Promise(res => setTimeout(res, 3000));
             }
         }
-
-        console.log("✅ Transaction Confirmed:", receipt);
 
         // ✅ 3. Fetch Transaction Details and Get Value
         const transaction = await provider.getTransaction(txHash);
@@ -45,9 +39,6 @@ export default async function createPaymentPOST(paymentData, open, creatorWallet
             const valueInEth = formatEther(transaction.value);
             paymentData.amountFunded = valueInEth;
             paymentData.txHash = txHash;
-
-            console.log("Payment data full ", paymentData)
-            console.log(`✅ Transaction ${txHash} sent ${valueInEth} Sepolia ETH.`);
         }
 
         // ✅ 4. Send Payment Data to API

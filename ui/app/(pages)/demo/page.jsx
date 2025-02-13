@@ -37,7 +37,6 @@ export default function DemoPage() {
             const tx = await open({
                 recipientAddress: "0xe4f1638f1E34dF36D0B3523b4402A89F1478f0B1", // Replace with actual address
             });
-            console.log("Transaction Sent:", tx);
         } catch (err) {
             console.error("Transaction Failed:", err);
         }

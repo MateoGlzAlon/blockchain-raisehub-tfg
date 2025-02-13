@@ -167,8 +167,6 @@ const ProjectDetails = ({ params }) => {
 
     if (!project) return null;
 
-    console.log("project es : ", project);
-
     return (
         <PageFrame>
             <div className="px-6">
