@@ -72,6 +72,13 @@ export default async function createPaymentPOST(paymentData, open, creatorWallet
 
         return response;
     } catch (err) {
-        console.error("🚨 Transaction Failed:", err);
+        if (err.message.includes("No wallet connected")) {
+            return "No wallet connected";
+        } else if (err.message.includes("user rejected transaction")) {
+            return "Payment cancelled";
+        } else {
+            console.error("🚨 Transaction Failed:", err);
+        }
+
     }
 }
