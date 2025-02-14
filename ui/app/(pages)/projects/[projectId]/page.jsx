@@ -265,7 +265,7 @@ const ProjectDetails = ({ params }) => {
                                 <div className="flex items-center justify-center gap-3 mt-2">
                                     {/* Etherscan Link */}
                                     <a
-                                        href={`https://etherscan.io/address/${project.creatorWallet}`}
+                                        href={`https://sepolia.etherscan.io/address/${project.creatorWallet}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="px-4 py-2 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out flex items-center gap-2"
