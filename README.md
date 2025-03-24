@@ -1,0 +1,1 @@
+If you want to see the documentation **deployed** you can check it at the [documentation page](https://docs-raisehub.vercel.app/intro). However, it is still not updated for the blockchain functionalities
