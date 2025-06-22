@@ -53,7 +53,7 @@ export default function RegisterPage() {
             {/* Left Section with Image and Text */}
             <div className="flex flex-col justify-center items-center lg:w-1/2 w-full bg-gray-100 p-8">
                 <Image
-                    src="/logoColor.svg" // Replace with your image path
+                    src={DATA.logoColor}
                     alt={`${DATA.projectName} Logo`}
                     onClick={() => router.push('/')}
                     width={400}

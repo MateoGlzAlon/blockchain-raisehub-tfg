@@ -61,7 +61,7 @@ export default function LoginPage() {
             {/* Left Section with Image and Text */}
             <div className="flex flex-col justify-center items-center w-1/2 bg-gray-100 p-8">
                 <Image
-                    src="/logoColor.svg" // Replace with your image path
+                    src={DATA.logoColor}
                     alt={`${DATA.projectName} Logo`}
                     width={400}
                     height={400}

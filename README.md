@@ -1,8 +1,31 @@
 # RaiseHub
 
+*Empowering Decentralized Funding, Accelerating Innovation*
+
+
+## Built with the tools and technologies:
+
+<p align="center">
+  <img src="https://img.shields.io/badge/-JSON-black?logo=json" />
+  <img src="https://img.shields.io/badge/-Markdown-black?logo=markdown" />
+  <img src="https://img.shields.io/badge/-npm-CB3837?logo=npm&logoColor=white" />
+  <img src="https://img.shields.io/badge/-JavaScript-F7DF1E?logo=javascript&logoColor=black" />
+  <img src="https://img.shields.io/badge/-Cypress-17202C?logo=cypress&logoColor=white" />
+  <img src="https://img.shields.io/badge/-Gradle-02303A?logo=gradle&logoColor=white" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/-Docker-2496ED?logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white" />
+  <img src="https://img.shields.io/badge/-Axios-8000FF" />
+  <img src="https://img.shields.io/badge/-datefns-FF5E5B" />
+</p>
+
+
 ## Decentralized Fundraising Platform
 
-This project is a hybrid web application developed as part of a Bachelor's Thesis. Its goal is to enable the creation and participation in fundraising campaigns using blockchain technology, while maintaining an accessible user experience—even for non-technical users.
+This project is a hybrid web application developed as part of a Bachelor's Thesis. Its goal is to enable the creation and participation in fundraising campaigns using blockchain technology, while maintaining an accessible user experience, even for non-technical users.
 
 It includes:
 

@@ -1,6 +1,6 @@
 export const DATA = {
     projectName: "RaiseHub",
-    logoColor: "/logoColor.svg",
+    logoColor: "/logoColorEth.svg",
     logoBlack: "/logoBlack.svg",
     logoWhite: "/logoWhite.svg",
     heroTitle: "Bring your favourite\nprojects to life",

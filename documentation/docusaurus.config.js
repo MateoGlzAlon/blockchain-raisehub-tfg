@@ -10,7 +10,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 const config = {
   title: 'RaiseHub',
   tagline: 'Fund you favourite projects',
-  favicon: 'img/logoColor.svg',
+  favicon: 'img/logoColorEth.svg',
 
   // Set the production url of your site here
   url: 'https://your-docusaurus-site.example.com',
@@ -58,7 +58,7 @@ const config = {
         title: 'RaiseHub',
         logo: {
           alt: 'RaiseHub logo',
-          src: 'img/logoColor.svg',
+          src: 'img/logoColorEth.svg',
         },
         items: [
 

@@ -6,7 +6,7 @@ sidebar_label: Welcome to RaiseHub
 # Welcome to RaiseHub
 
 <div class="text--center"> 
-    <img src="/img/logoColor.svg" alt="RaiseHub Logo" width="400" />
+    <img src="/img/logoColorEth.svg" alt="RaiseHub Logo" width="400" />
 </div>
 
 ## Introduction
