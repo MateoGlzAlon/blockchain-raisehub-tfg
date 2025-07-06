@@ -113,6 +113,4 @@ Here’s an improved version of your paragraph with clearer structure, better fl
 
 If you’d like to explore the **deployed documentation**, you can visit the [RaiseHub documentation site](https://docs-raisehub.vercel.app/intro).
 
-> Please note: the documentation is still pending updates to fully reflect the blockchain functionalities introduced in the latest version.
-
 Everything needed to get started, such as required environment variables, setup instructions, and user guides is already available there and will continue to be updated as the project evolves.
