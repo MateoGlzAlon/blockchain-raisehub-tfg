@@ -3,6 +3,20 @@
 *Empowering Decentralized Funding, Accelerating Innovation*
 
 
+---
+## Monorepo and Project Structure
+
+This repository is the **monorepo** for RaiseHub and represents a comprehensive extension of previous work, incorporating **blockchain functionality** and **best practices** in project structure and deployment.
+
+It builds upon the following foundational repositories:
+
+- 🔗 **Frontend:** [ui-crowfunding-fontys-project](https://github.com/MateoGlzAlon/ui-crowfunding-fontys-project)  
+- 🔗 **Backend:** [backend-crowfunding-fontys-project](https://github.com/MateoGlzAlon/backend-crowfunding-fontys-project)
+
+This version unifies both services while adding blockchain integration, container orchestration, and streamlined development via Makefiles and Docker.
+
+---
+
 ## Built with the tools and technologies:
 
 <p align="center">
@@ -114,3 +128,9 @@ Here’s an improved version of your paragraph with clearer structure, better fl
 If you’d like to explore the **deployed documentation**, you can visit the [RaiseHub documentation site](https://docs-raisehub.vercel.app/intro).
 
 Everything needed to get started, such as required environment variables, setup instructions, and user guides is already available there and will continue to be updated as the project evolves.
+
+This repo is the monorepo and blockchain and good practices extension
+of this repositories
+
+Frontend: https://github.com/MateoGlzAlon/ui-crowfunding-fontys-project
+Backend:https://github.com/MateoGlzAlon/backend-crowfunding-fontys-project
